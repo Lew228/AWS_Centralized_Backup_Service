@@ -1,14 +1,12 @@
 # 3. AWS Backup Vault
-# -----------------------------------------------------------------------------
 # The vault is the secure, encrypted, and isolated container where the backups land.
-# [Image of AWS Backup service architecture components]
+
 resource "aws_backup_vault" "vault" {
   name        = var.backup_vault_name
 }
 
-# -----------------------------------------------------------------------------
 # 4. AWS Backup Plan (Schedule and Retention)
-# -----------------------------------------------------------------------------
+
 resource "aws_backup_plan" "daily_plan" {
   name = "Daily-S3-Backup-Plan"
 
@@ -35,11 +33,9 @@ resource "aws_backup_plan" "daily_plan" {
   }
 }
 
-
-# -----------------------------------------------------------------------------
 # 5. AWS Backup Selection (Resource Assignment)
-# -----------------------------------------------------------------------------
 # This links the backup plan to the specific resource (the S3 bucket).
+
 resource "aws_backup_selection" "s3_selection" {
   name          = "S3-Selection-${var.source_bucket_name}"
   plan_id       = aws_backup_plan.daily_plan.id
